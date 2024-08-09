@@ -67,9 +67,11 @@ $summary | ConvertTo-Json | Set-Content -Path "summary.json"
 Write-Output "Summary saved to summary.json"
 
 # SEND NOTIFICATION
-if($failedTests -ge 1) {
-	$jsonContent = Get-Content -Path ".\summary.json" -Raw
-	Invoke-RestMethod -Uri $notificationUrl -Method Post -Body $jsonContent -ContentType "application/json"
-	
-	Write-Output "Result Summary sent to notificationUrl"
+if ($failedTests -ge 1 -and -not [string]::IsNullOrEmpty($notificationUrl)) {
+    $jsonContent = Get-Content -Path ".\summary.json" -Raw
+    Invoke-RestMethod -Uri $notificationUrl -Method Post -Body $jsonContent -ContentType "application/json"
+    Write-Output "Result Summary sent to notificationUrl"
+}
+else {
+    Write-Output "Skipped Sending Notification: No failed tests or notificationUrl not provided"
 }
