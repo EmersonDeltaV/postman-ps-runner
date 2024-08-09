@@ -4,9 +4,9 @@ This PowerShell script runs a Postman collection using the specified environment
 
 # Prerequisite
 
-## Software
+## Softwares
 
-The system that runs this PowerShell script should have the following npm packages installed globally:
+The system that runs this PowerShell script should have the following software installed:
 1. npm: Install it using the Node.js installer available on the cloud.
 2. newman: Install it using `npm install newman -g`.
 3. newman-reporter-junitfull: Install it using `npm install newman-reporter-junitfull -g`.
@@ -20,7 +20,7 @@ The PowerShell script requires the following parameters:
 3. `environmentId`: The ID of the Postman environment you would like to use.
 4. `workspaceId`: The ID where the Postman collection is located. This will be used to download the global variables to be used.
 5. `systemName`: A reference to the environment being used. Readable name of the environment ID.
-6. `notificationUrl`: A POST endpoint that accepts a JSON body. This is where the JSON summary will be sent.
+6. `notificationUrl`: (optional) A POST endpoint that accepts a JSON body. This is where the JSON summary will be sent.
 
 # How to Run
 
