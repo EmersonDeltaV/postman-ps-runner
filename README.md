@@ -21,8 +21,10 @@ The PowerShell script requires the following parameters:
 4. `workspaceId`: The ID where the Postman collection is located. This will be used to download the global variables to be used.
 5. `systemName`: A reference to the environment being used. Readable name of the environment ID.
 6. `notificationUrl`: (optional) A POST endpoint that accepts a JSON body. This is where the JSON summary will be sent.
+7. `outputDirectory`: (optional) The directory where all generated and downloaded files will be stored.
+8. `addSuffix`: (optional) \[boolean\], Indicated whether there is a date and time suffix of the generated files `JUnitReport.xml` and `Summary.json`. Suffix format: `_yyyyMMdd_HHmm` example: `JUnitReport_20240810_1452.xml`
 
 # How to Run
 
 To run the PowerShell script, execute the following command:
-`.\collection-runner.ps1 -apiKey "PMAK-66b1b8ae71xxxxxxxx3a2277-7bexxxxxa27841e492xxxxxxxxxxb6eee5" -collectionId "32379480-dxxxxx72-1d40-4ef3-b102-xxxxxxxx3bf0" -environmentId "32xxx480-xxxxxxxx-25f2-4ca8-xxx-139xxx542f8" -workspaceId "1a63ce0e-xxxx-43a2-9251-xxxxxxx5ce9c" -systemName "PSS-120" -notificationUrl "https://www.example.com/test-result"`
+`.\collection-runner.ps1 -apiKey "PMAK-66b1b8ae71xxxxxxxx3a2277-7bexxxxxa27841e492xxxxxxxxxxb6eee5" -collectionId "32379480-dxxxxx72-1d40-4ef3-b102-xxxxxxxx3bf0" -environmentId "32xxx480-xxxxxxxx-25f2-4ca8-xxx-139xxx542f8" -workspaceId "1a63ce0e-xxxx-43a2-9251-xxxxxxx5ce9c" -systemName "TEST-01" -notificationUrl "https://www.example.com/test-result" -outputDirectory ".\results" -addSuffix 1`

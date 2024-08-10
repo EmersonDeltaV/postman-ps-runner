@@ -4,7 +4,9 @@
     [string]$environmentId,
     [string]$workspaceId,
     [string]$systemName,
-	[string]$notificationUrl
+	[string]$notificationUrl,
+	[string]$outputDirectory,
+	[boolean]$addSuffix
 )
 
 # Define the Postman API endpoints
@@ -17,6 +19,27 @@ $collectionFile = "collection.json"
 $environmentFile = "environment.json"
 $globalVariablesFile = "globals.json"
 
+$junitFilename = "JUnitReport.xml"
+$jsonSummaryFilename = "Summary.json"
+
+if($addSuffix -eq $true)
+{
+	$currentTime = Get-Date
+	[string]$fileSufix = $currentTime.ToString("_yyyyMMdd_HHmm")
+
+	$junitFilename = "JUnitReport" + $fileSufix + ".xml"
+	$jsonSummaryFilename = "Summary" + $fileSufix + ".json"
+}
+
+if(-not [string]::IsNullOrEmpty($outputDirectory))
+{
+	$collectionFile = Join-Path -Path $outputDirectory -ChildPath $collectionFile
+	$environmentFile = Join-Path -Path $outputDirectory -ChildPath $environmentFile
+	$globalVariablesFile = Join-Path -Path $outputDirectory -ChildPath $globalVariablesFile
+	$junitFilename = Join-Path -Path $outputDirectory -ChildPath $junitFilename
+	$jsonSummaryFilename = Join-Path -Path $outputDirectory -ChildPath $jsonSummaryFilename
+}
+
 # Download the collection
 Invoke-RestMethod -Uri $collectionUrl -Headers @{ "X-Api-Key" = $apiKey } | ConvertTo-Json -Depth 100 | Out-File $collectionFile
 
@@ -27,15 +50,15 @@ Invoke-RestMethod -Uri $environmentUrl -Headers @{ "X-Api-Key" = $apiKey } | Con
 Invoke-RestMethod -Uri $globalVariablesUrl | ConvertTo-Json -Depth 100 | Out-File $globalVariablesFile
 
 # Run Newman with the specified parameters
-newman run $collectionFile -e $environmentFile -g $globalVariablesFile -r junit --reporter-junit-export JUnitReport.xml -k
+newman run $collectionFile -e $environmentFile -g $globalVariablesFile -r junit --reporter-junit-export $junitFilename -k
 
 # Print a success message
 Write-Host "Collection and environment downloaded successfully. Collection saved as $collectionFile, environment saved as $environmentFile."
-Write-Host "Newman run completed. JUnit report exported as JUnitReport.xml."
+Write-Host "Newman run completed. JUnit report exported as $junitFilename"
 
 
 # READING THE JUNITREPORT.XML
-[xml]$xml = Get-Content -Path ".\JUnitReport.xml"
+[xml]$xml = Get-Content -Path $junitFilename
 
 $totalTests = 0
 $failedTests = 0
@@ -61,14 +84,14 @@ $summary = @{
 }
 
 # Convert the summary object to JSON and save it to a file
-$summary | ConvertTo-Json | Set-Content -Path "summary.json"
+$summary | ConvertTo-Json | Set-Content -Path $jsonSummaryFilename
 
 
-Write-Output "Summary saved to summary.json"
+Write-Output "Summary saved to $jsonSummaryFilename"
 
 # SEND NOTIFICATION
 if ($failedTests -ge 1 -and -not [string]::IsNullOrEmpty($notificationUrl)) {
-    $jsonContent = Get-Content -Path ".\summary.json" -Raw
+    $jsonContent = Get-Content -Path $jsonSummaryFilename -Raw
     Invoke-RestMethod -Uri $notificationUrl -Method Post -Body $jsonContent -ContentType "application/json"
     Write-Output "Result Summary sent to notificationUrl"
 }
