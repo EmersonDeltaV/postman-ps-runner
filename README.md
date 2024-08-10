@@ -27,4 +27,9 @@ The PowerShell script requires the following parameters:
 # How to Run
 
 To run the PowerShell script, execute the following command:
+## Simple
+`.\collection-runner.ps1 -apiKey "PMAK-66b1b8ae71xxxxxxxx3a2277-7bexxxxxa27841e492xxxxxxxxxxb6eee5" -collectionId "32379480-dxxxxx72-1d40-4ef3-b102-xxxxxxxx3bf0" -environmentId "32xxx480-xxxxxxxx-25f2-4ca8-xxx-139xxx542f8" -workspaceId "1a63ce0e-xxxx-43a2-9251-xxxxxxx5ce9c" -systemName "TEST-01"`
+
+### Complete
+
 `.\collection-runner.ps1 -apiKey "PMAK-66b1b8ae71xxxxxxxx3a2277-7bexxxxxa27841e492xxxxxxxxxxb6eee5" -collectionId "32379480-dxxxxx72-1d40-4ef3-b102-xxxxxxxx3bf0" -environmentId "32xxx480-xxxxxxxx-25f2-4ca8-xxx-139xxx542f8" -workspaceId "1a63ce0e-xxxx-43a2-9251-xxxxxxx5ce9c" -systemName "TEST-01" -notificationUrl "https://www.example.com/test-result" -outputDirectory ".\results" -addSuffix 1`
