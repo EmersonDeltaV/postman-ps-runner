@@ -23,6 +23,7 @@ $junitFilename = "JUnitReport.xml"
 $jsonSummaryFilename = "Summary.json"
 
 [int]$epochTime = Get-Date -UFormat %s
+$epochTime = $epochTime * 1000
 Write-Output $epochTime
 
 if($addSuffix -eq $true)
