@@ -22,7 +22,7 @@ The PowerShell script requires the following parameters:
 5. `systemName`: A reference to the environment being used. Readable name of the environment ID.
 6. `notificationUrl`: (optional) A POST endpoint that accepts a JSON body. This is where the JSON summary will be sent.
 7. `outputDirectory`: (optional) The directory where all generated and downloaded files will be stored.
-8. `addSuffix`: (optional) \[boolean\], Indicated whether there is a date and time suffix of the generated files `JUnitReport.xml` and `Summary.json`. Suffix format: `_yyyyMMdd_HHmm` example: `JUnitReport_20240810_1452.xml`
+8. `addSuffix`: (optional) \[boolean\], Indicated whether there is a date and time suffix of the generated files `JUnitReport.xml` and `Summary.json`. Suffix format: `_<systemName>_yyyyMMdd_HHmm` example: `JUnitReport_TEST-01_20240810_1452.xml`
 
 # How to Run
 

@@ -22,13 +22,16 @@ $globalVariablesFile = "globals.json"
 $junitFilename = "JUnitReport.xml"
 $jsonSummaryFilename = "Summary.json"
 
+[int]$epochTime = Get-Date -UFormat %s
+Write-Output $epochTime
+
 if($addSuffix -eq $true)
 {
 	$currentTime = Get-Date
-	[string]$fileSufix = $currentTime.ToString("_yyyyMMdd_HHmm")
+	[string]$fileSufix = $currentTime.ToString("-yyyyMMdd_HHmm")
 
-	$junitFilename = "JUnitReport" + $fileSufix + ".xml"
-	$jsonSummaryFilename = "Summary" + $fileSufix + ".json"
+	$junitFilename = "JUnitReport-" + $systemName + $fileSufix + ".xml"
+	$jsonSummaryFilename = "Summary-" + $systemName + $fileSufix + ".json"
 }
 
 if(-not [string]::IsNullOrEmpty($outputDirectory))
@@ -81,6 +84,7 @@ $summary = @{
     FailedTests = $failedTests
     FailedTestList = $failedTestList
     System = $systemName
+    Datetime = $epochTime
 }
 
 # Convert the summary object to JSON and save it to a file

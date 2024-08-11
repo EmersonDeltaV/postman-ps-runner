@@ -1,5 +1,5 @@
 collection.json
 environment.json
 globals.json
-summary.json
-JUnitReport.xml
+summary*.json
+JUnitReport*.xml
