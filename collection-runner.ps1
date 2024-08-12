@@ -22,7 +22,7 @@ $globalVariablesFile = "globals.json"
 $junitFilename = "JUnitReport.xml"
 $jsonSummaryFilename = "Summary.json"
 
-[int]$epochTime = Get-Date -UFormat %s
+[long]$epochTime = Get-Date -UFormat %s
 $epochTime = $epochTime * 1000
 Write-Output $epochTime
 
